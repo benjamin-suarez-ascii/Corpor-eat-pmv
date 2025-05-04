@@ -1,66 +1,65 @@
 <template>
-    <div class="reservation-view">
-      <h1>Hacer Nueva Reserva</h1>
-      
-      <form @submit.prevent="submitReservation" class="reservation-form">
-        <div class="form-group">
-          <label for="location">Comedor Corporativo</label>
-          <select id="location" v-model="form.location" required>
-            <option value="" disabled>Seleccione un comedor</option>
-            <option value="principal">Comedor Principal</option>
-            <option value="ejecutivo">Comedor Ejecutivo</option>
-            <option value="terraza">Terraza Cafetería</option>
-          </select>
-        </div>
-  
-        <div class="form-row">
-          <div class="form-group">
-            <label for="date">Fecha</label>
-            <input type="date" id="date" v-model="form.date" required>
-          </div>
-          <div class="form-group">
-            <label for="time">Hora</label>
-            <input type="time" id="time" v-model="form.time" min="11:00" max="15:30" required>
-          </div>
-        </div>
-  
-        <div class="form-group">
-          <label for="guests">Número de Personas</label>
-          <input type="number" id="guests" v-model="form.guests" min="1" max="8" required>
-        </div>
-  
-        <div class="form-group">
-          <label for="notes">Notas Adicionales</label>
-          <textarea id="notes" v-model="form.notes" rows="3"></textarea>
-        </div>
-  
-        <button type="submit" class="submit-btn">Confirmar Reserva</button>
-      </form>
+  <div class="reservation-view">
+    <h1>Hacer Nueva Reserva</h1>
+    
+    <form @submit.prevent="submitReservation">
+      <div class="form-group">
+        <label>Comedor:</label>
+        <select v-model="form.location" required>
+          <option value="principal">Comedor Principal</option>
+          <option value="ejecutivo">Comedor Ejecutivo</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Fecha:</label>
+        <input type="date" v-model="form.date" required>
+      </div>
+
+      <div class="form-group">
+        <label>Hora:</label>
+        <input type="time" v-model="form.time" required>
+      </div>
+
+      <div class="form-group">
+        <label>Personas:</label>
+        <input type="number" v-model.number="form.guests" min="1" max="8" required>
+      </div>
+
+      <button type="submit">Confirmar</button>
+    </form>
+
+    <div v-if="success" class="success-message">
+      ¡Reserva realizada con éxito!
     </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'MakeReservationView',
-    data() {
-      return {
-        form: {
-          location: '',
-          date: '',
-          time: '',
-          guests: 1,
-          notes: ''
-        }
-      }
-    },
-    methods: {
-      submitReservation() {
-        alert(`Reserva confirmada en ${this.form.location} para ${this.form.date} a las ${this.form.time}`)
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      form: {
+        location: '',
+        date: '',
+        time: '',
+        guests: 1
+      },
+      success: false
+    }
+  },
+  methods: {
+    submitReservation() {
+      // Simulación de envío a backend
+      console.log('Reserva enviada:', this.form)
+      this.success = true
+      setTimeout(() => {
         this.$router.push('/reservations')
-      }
+      }, 1500)
     }
   }
-  </script>
+}
+</script>
   
   <style scoped>
   .reservation-view {
